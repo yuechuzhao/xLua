@@ -4,33 +4,19 @@
 # http://opensource.org/licenses/MIT
 # Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-#begin lepg
-set (LEPG_SRC 
-    lpeg/source/lpcap.c
-    lpeg/source/lpcode.c
-    lpeg/source/lpprint.c
-    lpeg/source/lptree.c
-    lpeg/source/lpvm.c)
+#begin lua-protobuf
+set (LPROTOBUF_SRC
+    lua-protobuf/source/pb.c)
 set_property(
-    SOURCE ${LEPG_SRC}
+    SOURCE ${LPROTOBUF_SRC}
     APPEND
     PROPERTY COMPILE_DEFINITIONS
     LUA_LIB
 )
-list(APPEND THIRDPART_INC  lpeg/include)
-set (THIRDPART_SRC ${THIRDPART_SRC} ${LEPG_SRC})
-#end lepg
+list(APPEND THIRDPART_INC  lua-protobuf/include)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${LPROTOBUF_SRC})
+#end lua-protobuf
 
-#begin struct
-set (STRUCT_SRC struct-0.2/struct.c)
-set_property(
-    SOURCE ${STRUCT_SRC}
-    APPEND
-    PROPERTY COMPILE_DEFINITIONS
-    LUA_LIB
-)
-set (THIRDPART_SRC ${THIRDPART_SRC} ${STRUCT_SRC})
-#end struct
 
 
 
