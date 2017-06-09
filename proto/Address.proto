@@ -27,7 +27,7 @@ message Person {
 
 message Ext {
   extend Person {
-    optional int32 test = 10;
+    optional int32 testEx = 10;
   }
 }
 

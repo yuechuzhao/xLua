@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using tutorial;
 using UnityEngine;
 using XLua;
 using XLua.LuaDLL;
@@ -17,9 +18,30 @@ public class TestProtobuf : MonoBehaviour {
 	}
 
     void OnGUI() {
-        if (GUI.Button(new Rect(0, 0, 120, 30), "load protobuf")) {
+
+        if (GUI.Button(new Rect(0, 0, 120, 30), "save protobuf")) {
+            SaveProtobuf();
+        }
+
+        if (GUI.Button(new Rect(0, 40, 120, 30), "load protobuf")) {
             LoadProtobuf();
         }
+    }
+
+    private void SaveProtobuf() {
+        tutorial.Person alice = new Person();
+        alice.test.Add(1);
+        alice.email = "alice@qq.com";
+        alice.name = "Alice";
+        alice.phone.Add(new Person.PhoneNumber() {
+            number = "12344566",
+            type = Person.PhoneType.HOME
+        });
+        ProtoSerializer serializer = new ProtoSerializer();
+        string outputPath = Application.dataPath + "/XLuaExtension/Resources/proto/personData.bytes";
+        FileStream fs = new FileStream(outputPath, FileMode.OpenOrCreate);
+        serializer.Serialize(fs, alice);
+        fs.Close();
     }
 
     private void LoadProtobuf() {
