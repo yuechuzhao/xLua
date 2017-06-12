@@ -1,5 +1,5 @@
-local pb = require 'pb';
-            
+﻿local pb = require 'pb';
+
 local pbfile = CS.UnityEngine.Resources.Load('proto/addressbook.pb');
 pb.load(pbfile.bytes);
 
@@ -17,9 +17,13 @@ pb.load(pbfile.bytes);
 --local data = assert(pb.encode('tutorial.Person', person))
 
 --读取protobuf-net序列化好的信息
-local pbbyteFile = CS.UnityEngine.Resources.Load('proto/personData');
-local data = pbbyteFile.bytes;
+local persistPath = tostring(CS.UnityEngine.Application.persistentDataPath);
+-- print(persistPath);
+local filePath = '/personData.bytes';
+local path = persistPath .. filePath;
+print(path);
+local pbbytes = CS.System.IO.File.ReadAllBytes(path);
 
 -- 从二进制数据解析出实际消息
-local result = pb.decode('tutorial.Person', data);
+local result = pb.decode('tutorial.Person', pbbytes);
 print(result.phone[1].number);

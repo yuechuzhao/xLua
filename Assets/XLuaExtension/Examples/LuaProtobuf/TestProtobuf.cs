@@ -38,17 +38,14 @@ public class TestProtobuf : MonoBehaviour {
             type = Person.PhoneType.HOME
         });
         ProtoSerializer serializer = new ProtoSerializer();
-        string outputPath = Application.dataPath + "/XLuaExtension/Resources/proto/personData.bytes";
+        string outputPath = Application.persistentDataPath + "/personData.bytes";
         FileStream fs = new FileStream(outputPath, FileMode.OpenOrCreate);
         serializer.Serialize(fs, alice);
         fs.Close();
     }
 
     private void LoadProtobuf() {
-        string luaScript = Application.dataPath + "/XLuaExtension/Examples/LuaProtobuf/test_protobuf.lua";
-
-        string script = "";
-        var reader = File.OpenText(luaScript);
-        _env.DoString(reader.ReadToEnd());
+        string luaScript = Resources.Load<TextAsset>("test_protobuf.lua").text;
+        _env.DoString(luaScript);
     }
 }
