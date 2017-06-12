@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using tutorial;
 using UnityEngine;
+using UnityEngine.UI;
 using XLua;
 using XLua.LuaDLL;
 
 public class TestProtobuf : MonoBehaviour {
     private LuaEnv _env = new LuaEnv();
+
+    public Text ResultText;
 	// Use this for initialization
 	void Start () {
 		_env.AddBuildin("pb", Lua.LoadPB);
@@ -47,5 +50,7 @@ public class TestProtobuf : MonoBehaviour {
     private void LoadProtobuf() {
         string luaScript = Resources.Load<TextAsset>("test_protobuf.lua").text;
         _env.DoString(luaScript);
+        string result = _env.Global.Get<string>("resultPhone");
+        ResultText.text = result;
     }
 }

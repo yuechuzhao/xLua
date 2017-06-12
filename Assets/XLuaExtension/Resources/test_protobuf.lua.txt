@@ -26,4 +26,4 @@ local pbbytes = CS.System.IO.File.ReadAllBytes(path);
 
 -- 从二进制数据解析出实际消息
 local result = pb.decode('tutorial.Person', pbbytes);
-print(result.phone[1].number);
+resultPhone = result.phone[1].number;
