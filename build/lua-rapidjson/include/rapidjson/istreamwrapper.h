@@ -12,20 +12,12 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
 
-#ifndef RAPIDJSON_ISTREAMWRAPPER_H_
-#define RAPIDJSON_ISTREAMWRAPPER_H_
-
 #include "stream.h"
 #include <iosfwd>
 
 #ifdef __clang__
 RAPIDJSON_DIAG_PUSH
 RAPIDJSON_DIAG_OFF(padded)
-#endif
-
-#ifdef _MSC_VER
-RAPIDJSON_DIAG_PUSH
-RAPIDJSON_DIAG_OFF(4351) // new behavior: elements of array 'array' will be default initialized
 #endif
 
 RAPIDJSON_NAMESPACE_BEGIN
@@ -54,7 +46,7 @@ public:
 
     Ch Peek() const { 
         typename StreamType::int_type c = stream_.peek();
-        return RAPIDJSON_LIKELY(c != StreamType::traits_type::eof()) ? static_cast<Ch>(c) : static_cast<Ch>('\0');
+        return RAPIDJSON_LIKELY(c != StreamType::traits_type::eof()) ? static_cast<Ch>(c) : '\0';
     }
 
     Ch Take() { 
@@ -106,10 +98,8 @@ private:
 typedef BasicIStreamWrapper<std::istream> IStreamWrapper;
 typedef BasicIStreamWrapper<std::wistream> WIStreamWrapper;
 
-#if defined(__clang__) || defined(_MSC_VER)
+#ifdef __clang__
 RAPIDJSON_DIAG_POP
 #endif
 
 RAPIDJSON_NAMESPACE_END
-
-#endif // RAPIDJSON_ISTREAMWRAPPER_H_
