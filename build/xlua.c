@@ -16,6 +16,12 @@
 #include <stdint.h>
 #include "i64lib.h"
 
+#if USING_LUAJIT
+#include "lj_obj.h"
+#else
+#include "lstate.h"
+#endif
+
 /*
 ** stdcall C function support
 */
@@ -34,7 +40,7 @@ LUA_API int xlua_get_registry_index() {
 }
 
 LUA_API int xlua_get_lib_version() {
-	return 103;
+	return 105;
 }
 
 LUA_API int xlua_tocsobj_safe(lua_State *L,int index) {
@@ -658,6 +664,12 @@ LUA_API int load_error_func(lua_State *L, int ref) {
 	return lua_gettop(L);
 }
 
+LUA_API int pcall_prepare(lua_State *L, int error_func_ref, int func_ref) {
+	lua_rawgeti(L, LUA_REGISTRYINDEX, error_func_ref);
+	lua_rawgeti(L, LUA_REGISTRYINDEX, func_ref);
+	return lua_gettop(L) - 1;
+}
+
 static void hook(lua_State *L, lua_Debug *ar)
 {
 	int event;
@@ -1206,6 +1218,10 @@ LUA_API int css_clone(lua_State *L) {
     lua_getmetatable(L, 1);
 	lua_setmetatable(L, -2);
 	return 1;
+}
+
+LUA_API void* xlua_gl(lua_State *L) {
+	return G(L);
 }
 
 static const luaL_Reg xlualib[] = {
